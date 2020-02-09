@@ -180,8 +180,8 @@ namespace DotsUI.Core
             TextRenderer settings = mgr.GetComponentData<TextRenderer>(targetText);
             var textData = mgr.GetBuffer<TextData>(targetText);
             
-            _VerticalAlignmentOptions verticalAlignment = (_VerticalAlignmentOptions)settings.Alignment;
-            _HorizontalAlignmentOptions horizontalAlignment = (_HorizontalAlignmentOptions)settings.Alignment;
+            VerticalAlignmentOptions verticalAlignment = (VerticalAlignmentOptions)settings.Alignment;
+            HorizontalAlignmentOptions horizontalAlignment = (HorizontalAlignmentOptions)settings.Alignment;
 
             var font = mgr.GetComponentData<TextFontAsset>(settings.Font);
             var glyphData = mgr.GetBuffer<FontGlyphData>(settings.Font);
@@ -220,11 +220,11 @@ namespace DotsUI.Core
                 Max = new float2(rect.Min.x+2.0f, rect.Max.y)
             };
         }
-        public static float GetAlignedLinePosition(ref WorldSpaceRect rect, float lineWidth, _HorizontalAlignmentOptions horizontalAlignment)
+        public static float GetAlignedLinePosition(ref WorldSpaceRect rect, float lineWidth, HorizontalAlignmentOptions horizontalAlignment)
         {
-            if ((horizontalAlignment & _HorizontalAlignmentOptions.Right) == _HorizontalAlignmentOptions.Right)
+            if ((horizontalAlignment & HorizontalAlignmentOptions.Right) == HorizontalAlignmentOptions.Right)
                 return rect.Min.x + rect.Width - lineWidth;
-            if ((horizontalAlignment & _HorizontalAlignmentOptions.Center) == _HorizontalAlignmentOptions.Center)
+            if ((horizontalAlignment & HorizontalAlignmentOptions.Center) == HorizontalAlignmentOptions.Center)
                 return rect.Min.x + rect.Width * 0.5f - lineWidth * 0.5f;
             return rect.Min.x;
         }
@@ -232,13 +232,13 @@ namespace DotsUI.Core
         public static float2 GetAlignedStartPosition(ref WorldSpaceRect rect, ref TextRenderer settings, ref TextFontAsset font, float textBlockHeight, float2 scale)
         {
             float startY = 0.0f;
-            _VerticalAlignmentOptions vertical = (_VerticalAlignmentOptions)settings.Alignment;
-            _HorizontalAlignmentOptions horizontal = (_HorizontalAlignmentOptions)settings.Alignment;
-            if ((vertical & _VerticalAlignmentOptions.Bottom) == _VerticalAlignmentOptions.Bottom)
+            VerticalAlignmentOptions vertical = (VerticalAlignmentOptions)settings.Alignment;
+            HorizontalAlignmentOptions horizontal = (HorizontalAlignmentOptions)settings.Alignment;
+            if ((vertical & VerticalAlignmentOptions.Bottom) == VerticalAlignmentOptions.Bottom)
                 startY = rect.Min.y - font.DescentLine * scale.y + textBlockHeight - font.LineHeight * scale.y;
-            else if ((vertical & _VerticalAlignmentOptions.Middle) == _VerticalAlignmentOptions.Middle)
+            else if ((vertical & VerticalAlignmentOptions.Middle) == VerticalAlignmentOptions.Middle)
                 startY = (rect.Min.y + rect.Max.y) * 0.5f - (font.AscentLine) * scale.y + textBlockHeight * 0.5f;
-            else if ((vertical & _VerticalAlignmentOptions.Top) == _VerticalAlignmentOptions.Top)
+            else if ((vertical & VerticalAlignmentOptions.Top) == VerticalAlignmentOptions.Top)
                 startY = rect.Max.y - (font.AscentLine) * scale.y;
             return new float2(rect.Min.x, startY);
         }
